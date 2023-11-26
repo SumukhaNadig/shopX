@@ -48,6 +48,41 @@ Product Document: **All our apps are paid apps on ShopX**
    1. /customer - [POST] - Add a customer 
    2. /customer/orders - [GET] - Details about customers previous orders
    3. /customer/order -[POST] - A customer placing the order
+
+```shell
+{
+  "_id": {
+    "$oid": "65622ab21536a5c470f57099"
+  },
+  "name": "Jack Sparrow",
+  "emailId": "jack@abc.com",
+  "password": "#hashedpw",
+  "orders": []
+}
+```
    
-1. Order : A static collection containing orders by customers
+2. Order : A static collection containing orders by customers
    1. /order/{id} - [GET] - Get order ID
+
+```shell
+{
+  "_id": {
+    "$oid": "65622d2a1536a5c470f570aa"
+  },
+  "sellerId": "<seller-id>",
+  "buyerId": "<buyer-id>",
+  "itemId": "<app-id>",
+  "buyerVpa": "user@upi",
+  "timestamp": "datetime.now()"
+}
+```
+<div style="page-break-before:always">&nbsp;</div>
+
+## Contributors
+
+- Anthony Clinton 
+- Sumukha
+- Siddharta Shandilya
+- Abhinav Bansal
+
+
