@@ -6,11 +6,12 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 
 ### ShopX Models
 
-1. Products catalogue:
-   1. /apps [GET] - A Catalogue of Apps
-   2. /apps/{id} [GET] - Look for a particular app by app id
+1. **Apps**: Gen AI Apps or products sold on shopX
+   1. /apps [GET] - A catalog of all the published Apps
+   2. /apps/{id} [GET] - A particular app details by app id
 
-Product Document: **All our apps are paid apps on ShopX** 
+**_Note:_** All our apps are paid apps on ShopX 
+
 ```shell
 {
   "_id": {
@@ -25,7 +26,7 @@ Product Document: **All our apps are paid apps on ShopX**
   "downloads":0
 }
 ```
-1. Author : A person using the ShopX
+1. **Author** : A person using the shopX
    1. /authors/apps [GET] - Get all the apps by an author
    2. /authors/app - [POST] - Create or submit a new app by author
    3. /authors/{appid} - [DELETE] - Delete an app by id, query param of author id
@@ -44,7 +45,7 @@ Product Document: **All our apps are paid apps on ShopX**
 }
 ```
 
-1. Customer : A person purchasing the apps:
+1. **Customer** : A person purchasing the apps:
    1. /customer - [POST] - Add a customer 
    2. /customer/orders - [GET] - Details about customers previous orders
    3. /customer/order -[POST] - A customer placing the order
@@ -61,7 +62,7 @@ Product Document: **All our apps are paid apps on ShopX**
 }
 ```
    
-2. Order : A static collection containing orders by customers
+2. **Order** : A static collection containing orders by customers
    1. /order/{id} - [GET] - Get order ID
 
 ```shell
@@ -76,7 +77,6 @@ Product Document: **All our apps are paid apps on ShopX**
   "timestamp": "datetime.now()"
 }
 ```
-<div style="page-break-before:always">&nbsp;</div>
 
 ## Contributors
 
