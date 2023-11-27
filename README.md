@@ -8,10 +8,12 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 
 1. Clone the project
 2. Open the path/to/project/shopx
-3. Run the following commands to run the app
+3. Configure the location of your MongoDB database:
+    `export MONGODB_URL="mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority"`
+4. Run the following commands to run the app
    `pip install -r requirements.txt`
    `python -m uvicorn main:main --reload`
-4. Your app should be running on http://127.0.0.1:8000 
+5. Your app should be running on http://127.0.0.1:8000 
 
 
 
