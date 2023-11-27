@@ -1,0 +1,4 @@
+import os
+
+MONGODB_CONNECTION_URL = os.environ["MONGODB_URL"]
+MONGODB_DATABASE_NAME = "shopX"
