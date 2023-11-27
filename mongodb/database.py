@@ -1,6 +1,4 @@
-from typing import Union
 from fastapi.encoders import jsonable_encoder
-from fastapi.types import UnionType
 from motor.core import AgnosticDatabase
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.order_model import Order
@@ -16,7 +14,7 @@ def db_connection():
     db = client[config.MONGODB_DATABASE_NAME]
     return db
 
-async def find_document(collection_name: str, query: dict, multiple: bool= False) -> UnionType[dict ,None]:
+async def find_document(collection_name: str, query: dict, multiple: bool= False) ->dict|None:
     try:
         if not multiple:
             document = await db[collection_name].find_one(query)
@@ -37,7 +35,7 @@ async def update_one(collection_name: str, filter_query: dict, updated_data: dic
     except Exception as e:
         return {}
 
-async def insert_one(collection_name: str, new_data: Union[Order, Customer]):
+async def insert_one(collection_name: str, new_data: Order| Customer):
     try:
         document = await db[collection_name].insert_one(
             document=jsonable_encoder(new_data),
