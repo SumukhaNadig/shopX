@@ -4,6 +4,17 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 ## shopX: A Marketplace for Gen AI Apps
 
 
+## Setting up your dev environment
+
+1. Clone the project
+2. Open the path/to/project/shopx
+3. Run the following commands to run the app
+   `pip install -r requirements.txt`
+   `python -m uvicorn main:main --reload`
+4. Your app should be running on http://127.0.0.1:8000 
+
+
+
 ### ShopX Models
 
 1. **Apps**: Gen AI Apps or products sold on shopX
