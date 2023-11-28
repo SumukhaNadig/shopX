@@ -3,11 +3,10 @@ from motor.core import AgnosticDatabase
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.order_model import Order
 import certifi
-
+from bson import ObjectId, errors
 import config
 from models.user_model import Customer
 ca = certifi.where()
-
 
 def db_connection():
     client = AsyncIOMotorClient(config.MONGODB_CONNECTION_URL, tlsCAFile=ca)
@@ -23,7 +22,6 @@ async def find_document(collection_name: str, query: dict, multiple: bool= False
         return document
     except Exception as e:
         return {e}
-
 
 # update operation
 async def update_one(collection_name: str, filter_query: dict, updated_data: dict):
@@ -43,6 +41,11 @@ async def insert_one(collection_name: str, new_data: Order| Customer):
         return document
     except Exception as e:
         return {}
-
+      
+async def validate_object_id(id: str) -> ObjectId:
+    try:
+        return ObjectId(id)
+    except (errors.InvalidId, TypeError):
+        raise ValueError(f"Invalid ObjectId: {id}")
 
 db: AgnosticDatabase = db_connection()

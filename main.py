@@ -3,8 +3,9 @@ from fastapi import FastAPI
 from models.user_model import Customer, Author
 from models.apps_model import App, Apps
 from models.order_model import Order
-from mongodb.database import find_document, insert_one, update_one
+from mongodb.database import find_document, insert_one, update_one, validate_object_id
 from bson.objectid import ObjectId
+
 
 app = FastAPI()
 
@@ -103,6 +104,23 @@ async def get_order_list(customer_email_id: str) -> list[Order] | dict:
                                              multiple=False)
                 order_list.append(orders)
             return order_list
+        return {"message": "Document was not found"}
+    except Exception as e:
+        return {}
+
+# API endpoints for order collection
+@app.get("/orders/{order_id}")
+async def get_order(order_id: str) -> dict:
+    try:
+        validated_order_id = await validate_object_id(order_id)
+        print(validated_order_id)
+        document = await find_document(collection_name="order",
+                                query={"_id": validated_order_id},
+                                multiple=False)
+        
+        if document:
+            document["_id"] = str(document["_id"])
+            return document
         return {"message": "Document was not found"}
     except Exception as e:
         return {}
