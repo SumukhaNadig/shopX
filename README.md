@@ -10,6 +10,9 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 2. Open the path/to/project/shopx
 3. Configure the location of your MongoDB database:
     `export MONGODB_URL="mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority"`
+
+    For Powershell:
+    ` $env:MONGODB_URL="mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority"`
 4. Run the following commands to run the app
    `pip install -r requirements.txt`
    `python -m uvicorn main:main --reload`
