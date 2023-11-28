@@ -17,7 +17,7 @@ def db_connection():
 async def find_document(collection_name: str, query: dict, multiple: bool= False) ->dict|None:
     try:
         if multiple:
-            document = await db[collection_name].find(query)
+            document = await db[collection_name].find(query).to_list(1000)
         else:
             document = await db[collection_name].find_one(query)
         return document
