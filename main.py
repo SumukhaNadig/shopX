@@ -1,11 +1,11 @@
 import uvicorn
-from fastapi import FastAPI
-from models.user_model import Customer, Author
+from fastapi.encoders import jsonable_encoder
+from fastapi import FastAPI, HTTPException
+from models.user_model import Customer, Author, Authors
 from models.apps_model import App, Apps
 from models.order_model import Order
-from mongodb.database import find_document, insert_one, update_one, validate_object_id
-from bson.objectid import ObjectId
-
+from mongodb.database import find_document, insert_one, update_one, validate_object_id, db
+from bson import ObjectId
 
 app = FastAPI()
 
@@ -13,11 +13,6 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return {"Welcome to ShopX"}
-
-
-@app.post("/users/author/")
-async def create_user(user: Author):
-    pass
 
 
 @app.get("/apps")
@@ -47,6 +42,70 @@ async def get_app(app_id:str):
         return {"message": "No App found for id"}
     except Exception as e:
         return {e}
+    
+
+@app.post("/app")
+async def create_app(app: App):
+    try:
+        document = jsonable_encoder(app)
+        document["authors"] = [ObjectId(author) for author in document["authors"]]
+        result = await db['apps'].insert_one(document)
+        if not result:
+            raise HTTPException(status_code=400, detail="App could not be created")
+        return {"App": f"{result.inserted_id} id created successfully!"}
+    
+    except Exception as e:
+        return {e}
+
+@app.post("/user/author")
+async def create_author(author: Author):
+    try:
+        document = jsonable_encoder(author)
+        document["apps"] = [ObjectId(app) for app in document["apps"]]
+        result = await db['authors'].insert_one(document)
+        if not result:
+            raise HTTPException(status_code=400, detail="Author could not be created")
+        
+        return {"Author": f"{result.inserted_id} id created successfully!"}
+    except Exception as e:
+        return {"message": str(e)}
+   
+
+@app.get("/authors")
+async def get_authors() -> Author | None:
+    try:
+        documents: list = await find_document(collection_name="authors",
+                                       query={},
+                                     multiple=True)
+        if documents:
+            for document in documents:
+                document['id'] = str(document['_id'])
+                del[document['_id']]
+                document["apps"] = [str(app) for app in document["apps"]]
+            print(documents)
+            return Authors(authors = document)
+        return {"message": "No Authors, please check back later"}
+    except Exception as e:
+        return {e}
+
+
+@app.get("/users/author/{author_id}")
+async def get_app(author_id:str):
+    try:
+        document = await find_document(collection_name="authors",
+                                       query={"_id": ObjectId(author_id)},
+                                       multiple=False)
+        if document is not None:
+            document['id'] = str(document['_id'])
+            del[document['_id']]
+            document['apps'] = [str(app) for app in document['apps']]
+            return document
+        return {"message": "No Author found for id"}
+    except Exception as e:
+        return {e}
+
+
+
 
 
 # below contains all the api endpoints related to customer
