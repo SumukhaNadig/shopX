@@ -15,13 +15,13 @@ def db_connection():
 
 async def find_document(collection_name: str, query: dict, multiple: bool= False) ->dict|None:
     try:
-        if not multiple:
-            document = await db[collection_name].find_one(query)
+        if multiple:
+            document = await db[collection_name].find(query).to_list(1000)
         else:
-            document = await db[collection_name].find(query)
+            document = await db[collection_name].find_one(query)
         return document
     except Exception as e:
-        return {}
+        return {e}
 
 # update operation
 async def update_one(collection_name: str, filter_query: dict, updated_data: dict):
@@ -41,7 +41,7 @@ async def insert_one(collection_name: str, new_data: Order| Customer):
         return document
     except Exception as e:
         return {}
-    
+      
 async def validate_object_id(id: str) -> ObjectId:
     try:
         return ObjectId(id)

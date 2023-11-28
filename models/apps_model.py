@@ -1,8 +1,13 @@
-from pydantic import BaseModel
-from typing import List
+from pydantic import BaseModel, Field, BeforeValidator
+from typing import List, Optional
+from typing_extensions import Annotated
+
+
+PyObjectId = Annotated[str, BeforeValidator(str)]
+
 
 class App(BaseModel):
-    _id: str
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     name: str
     author: List[str]
     price: float
@@ -10,4 +15,7 @@ class App(BaseModel):
     version: str
     rating: int
     downloads: int
+
+class Apps(BaseModel):
+    apps: List[App]
 
