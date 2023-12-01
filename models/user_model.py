@@ -1,17 +1,21 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
+from pydantic import BaseModel, Field, BeforeValidator
+from typing import List, Optional,Annotated
+from bson import ObjectId
 
+PyObjectId = Annotated[str, BeforeValidator(str)]
 
 class Author(BaseModel):
-    id: str
+    id: Optional[PyObjectId] = Field(default=None)
     name: str
     emailId: str
     password: str
-    apps: List[str]
+    apps: List[PyObjectId]
     vpa: str
-
-class Authors(BaseModel):
-    apps: List[Author]
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
 
 class Customer(BaseModel):
     _id: str
