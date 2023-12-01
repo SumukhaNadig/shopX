@@ -94,6 +94,18 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 }
 ```
 
+## Containerizing the App with Docker
+
+1. Created the [Dockerfile](/Dockerfile) with python:3.11 base image.
+2. Building the docker image 
+   `docker build -t shopx .`
+3. Running the container locally
+   `docker run -dp 127.0.0.1:8000:8000 -e $MONGODB_URL shopx`
+4. Pushing the container to Docker Registry
+   ```shell
+   
+   ```
+
 ## Contributors
 
 - Anthony Clinton 
