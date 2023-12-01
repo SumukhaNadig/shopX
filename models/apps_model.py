@@ -7,9 +7,10 @@ PyObjectId = Annotated[str, BeforeValidator(str)]
 
 
 class App(BaseModel):
-    id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    #id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    id: str
     name: str
-    author: List[str]
+    authors: List[str]
     price: float
     description: str
     version: str
