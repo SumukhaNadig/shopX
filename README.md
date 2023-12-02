@@ -4,6 +4,10 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
 ## shopX: A Marketplace for Gen AI Apps
 
 
+# Table Of Contents
+
+[Setting up your dev environment](#setting-up-your-dev-environment)
+
 ## Setting up your dev environment
 
 1. Clone the project
@@ -101,10 +105,12 @@ Repo for the Ecommerece Project (https://github.com/abhibansal60/backend-mentors
    `docker build -t shopx .`
 3. Running the container locally
    `docker run -dp 127.0.0.1:8000:8000 -e $MONGODB_URL shopx`
-4. Pushing the container to Docker Registry
+4. Pushing the container to the Docker Registry
    ```shell
-   
+   MONGODB_URL="mongodb+srv://<username>:<username>@<cluster>.mongodb.net/"
+   docker run -dp 0.0.0.0:8000:8000 -e MONGODB_URL=$MONGODB_URL abhibansal999/shopx:2023-12-02--24-34
    ```
+5. You can optionally deploy your app on a free instance of [Play with Docker Labs](https://labs.play-with-docker.com/)
 
 ## Contributors
 
